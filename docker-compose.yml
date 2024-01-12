@@ -1,0 +1,29 @@
+# Overview
+# build env to build LLM
+
+version: '3.7'
+
+name: ${PROJECT_NAME}  # project name (aka stack)
+
+services:
+
+  # jupyterlab
+  lab:
+    build: .
+    container_name: ${PROJECT_ABBREV}-lab
+
+    restart: unless-stopped
+
+    environment:
+      - PASSWORD=${LAB_PASSWORD}
+
+    ports:
+      - ${LAB_PORT}:8888
+
+    volumes:
+      - type: bind
+        source: ./working
+        target: /usr/app
+      - type: bind
+        source: ./config/jupyter_notebook_config.py
+        target: /root/.jupyter/jupyter_notebook_config.py
