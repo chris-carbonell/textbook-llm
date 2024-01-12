@@ -1,16 +1,16 @@
 # Overview
 # build env
 
-FROM python:slim
+FROM debian:buster
 
 WORKDIR /usr/app
 
-RUN apt-get update \
-    && apt-get install -y gcc libpq-dev
+RUN apt update \
+    && apt install -y cmake gcc libpq-dev python3 python3-pip
 
 COPY requirements.txt .
-RUN python -m pip install --upgrade pip \
-    && python -m pip install -r requirements.txt
+RUN python3 -m pip install --upgrade pip \
+    && python3 -m pip install -r requirements.txt
 
 EXPOSE 8888
 
