@@ -7,23 +7,65 @@ name: ${PROJECT_NAME}  # project name (aka stack)
 
 services:
 
+  # db
+  # database
+  db:
+    image: ankane/pgvector
+    container_name: ${PROJECT_ABBREV}-db
+
+    restart: always
+
+    ports:
+      - "${DB_PORT}:${POSTGRES_PORT}"
+    
+    env_file:
+      - .env
+    
+    volumes:
+      - ./db/data:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d/
+
+    healthcheck:
+      test: pg_isready -d ${POSTGRES_DB} -U ${POSTGRES_USER}
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+    networks:
+      - llm
+
   # jupyterlab
   lab:
-    build: .
+    build:
+      context: ./lab
+      args:
+        # set jupyter password
+        - JUPYTER_PASSWORD=${LAB_PASSWORD}
+        - JUPYTER_PASSWORD_SALT=${LAB_PASSWORD_SALT}
+
     container_name: ${PROJECT_ABBREV}-lab
 
     restart: unless-stopped
-
-    environment:
-      - PASSWORD=${LAB_PASSWORD}
 
     ports:
       - ${LAB_PORT}:8888
 
     volumes:
       - type: bind
-        source: ./working
+        source: ./lab/working
         target: /usr/app
-      - type: bind
-        source: ./config/jupyter_notebook_config.py
-        target: /root/.jupyter/jupyter_notebook_config.py
+      # you could pass the whole config if you want
+      # e.g., manually set hashed password
+      # - type: bind
+      #   source: ./lab/config/jupyter_notebook_config.py
+      #   target: /root/.jupyter/jupyter_notebook_config.py
+    
+    depends_on:
+      db:
+        condition: service_healthy
+
+    networks:
+      - llm
+
+networks:
+  llm:

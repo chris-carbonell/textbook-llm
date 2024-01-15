@@ -466,7 +466,7 @@ c = get_config()  #noqa
 #                        The string should be of the form type:salt:hashed-
 #  password.
 #  Default: ''
-# c.NotebookApp.password = ''
+# c.NotebookApp.password = 'argon2:$argon2id$v=19$m=10240,t=10,p=8$jE/filMASz77yv7bPsoRTw$tdMrWjalHobt9dpHRUn/P2z2gB31Hcznp4w0z0bXnoY'
 
 ## Forces users to use a password for the Notebook server.
 #                        This is useful in a multi user environment, for instance when

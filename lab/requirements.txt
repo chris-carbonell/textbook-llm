@@ -1,7 +1,12 @@
 # data
 pandas
+psycopg2-binary
+pgvector
+asyncpg
+sqlalchemy[asyncio]
+greenlet
 
-# jupyter
+# notebook
 jupyter
 jupyterlab
 
