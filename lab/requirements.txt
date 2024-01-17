@@ -16,3 +16,4 @@ llama-index
 llama-index[local_models]
 llama-index[postgres]
 multidict
+transformers

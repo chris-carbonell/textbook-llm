@@ -36,19 +36,17 @@ services:
 
   # jupyterlab
   lab:
-    build:
-      context: ./lab
-      args:
-        # set jupyter password
-        - JUPYTER_PASSWORD=${LAB_PASSWORD}
-        - JUPYTER_PASSWORD_SALT=${LAB_PASSWORD_SALT}
-
+    build: ./lab
     container_name: ${PROJECT_ABBREV}-lab
 
     restart: unless-stopped
 
     ports:
       - ${LAB_PORT}:8888
+
+    environment:
+      # set jupyter password
+      - JUPYTER_PASSWORD=${LAB_PASSWORD}
 
     volumes:
       - type: bind
