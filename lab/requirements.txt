@@ -4,8 +4,6 @@ greenlet
 pandas
 pgvector
 psycopg2-binary
-# https://stackoverflow.com/questions/76934579/pydanticusererror-if-you-use-root-validator-with-pre-false-the-default-you
-pydantic==1.10.9
 sqlalchemy[asyncio]
 
 # notebook
