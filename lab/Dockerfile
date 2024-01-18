@@ -1,20 +1,22 @@
 # Overview
 # build env
 
-FROM debian:buster
+FROM python:bookworm
 
 EXPOSE 8888
 
+RUN apt update \
+    && apt install -y cmake gcc libpq-dev python3.11 python3.11-venv python3.11-dev
+
 WORKDIR /usr/app
 
-RUN apt update \
-    && apt install -y argon2 cmake gcc libpq-dev python3 python3-pip
-
+RUN python3.11 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 COPY requirements.txt .
-RUN python3 -m pip install --upgrade pip \
-    && python3 -m pip install -r requirements.txt
+RUN python3.11 -m pip install --upgrade pip \
+    && python3.11 -m pip install -r requirements.txt
 
-# copy entrypoint
+# set up entrypoint
 # for some reason, I can't execute from /usr/app
 COPY docker-entrypoint.sh /
 RUN ["chmod", "+x", "/docker-entrypoint.sh"]

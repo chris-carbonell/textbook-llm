@@ -1,10 +1,10 @@
 # data
-pandas
-psycopg2-binary
-pgvector
 asyncpg
-sqlalchemy[asyncio]
 greenlet
+pandas
+pgvector
+psycopg2-binary
+sqlalchemy[asyncio]
 
 # notebook
 jupyter
@@ -12,8 +12,9 @@ jupyterlab
 
 # llm
 llama-cpp-python
-llama-index
+llama-index>=0.9.12
 llama-index[local_models]
 llama-index[postgres]
 multidict
+openai
 transformers
