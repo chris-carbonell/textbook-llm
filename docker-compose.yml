@@ -44,9 +44,8 @@ services:
     ports:
       - ${LAB_PORT}:8888
 
-    environment:
-      # set jupyter password
-      - JUPYTER_PASSWORD=${LAB_PASSWORD}
+    env_file:
+      - .env
 
     volumes:
       - type: bind
